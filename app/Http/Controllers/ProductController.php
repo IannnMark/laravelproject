@@ -148,18 +148,25 @@ class ProductController extends Controller
 
               $order = new Order();
               $order->date_placed = now();
-            //   $custid = -1;
               $customer =  Customer::find(1);
+
+              $order->customer_id = $customer->customer_id;
+
+               $order->save();
+            //   $custid = -1;
+
+            //   $customer =  Customer::find(1);
+
             //   $product = Product::find(1);
-              $order->customer_id = $customer->id;
+
+            //   $order->customer_id = $customer->id;
+
             //   $order->product_id = $product->id;
                           //   $customer->orders()->save($order);
 
             foreach($products as $product) {
                $id = $product['product_id'];
                $order->products()->attach($order->orderinfo_id,['quantity'=> $product['quantity'],'product_id'=>$id]);
-
-            //    $order->product_id = $id;
 
                $stock = Stock::find($id);
                $stock->quantity = $stock->quantity - $product['quantity'];
